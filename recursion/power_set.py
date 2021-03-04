@@ -1,4 +1,6 @@
 from typing import List
+import math
+
 
 def generate_power_set_recursively(input_set: List[int]) -> List[List[int]]:
     """
@@ -27,7 +29,7 @@ def generate_power_set_bit_array(input_set: List[int]) -> List[List[int]]:
         bit_array = int_for_subset
         subset = []
         while bit_array:
-            subset.append(input_set[int(math.log2(bit_aray & ~(bit_array - 1)))])
+            subset.append(input_set[int(math.log2(bit_array & ~(bit_array - 1)))])
             bit_array &= bit_array - 1
         power_set.append(subset)
     return power_set
