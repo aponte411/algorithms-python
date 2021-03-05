@@ -1,6 +1,8 @@
 from collections import namedtuple
 from typing import List
 
+# WHITE = unvisited
+# BLACK = visited
 WHITE, BLACK = 0, 1
 
 Coordinate = namedtuple('Coordinate', ('x', 'y'))
