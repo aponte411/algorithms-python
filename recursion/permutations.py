@@ -20,4 +20,12 @@ def permutations(A: List[int]) -> List[List[int]]:
     dfs(index=0)
     return result
 
+def test():
+    nums = [1,2,3]
+    expected = [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,2,1],[3,1,2]]
+    result = permutations(A=nums)
+    assert result == expected, f'Expected {expected}, got {result}'
+    print(result)
 
+if __name__ == "__main__":
+    test()

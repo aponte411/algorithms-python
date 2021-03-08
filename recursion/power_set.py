@@ -35,4 +35,12 @@ def generate_power_set_bit_array(input_set: List[int]) -> List[List[int]]:
     return power_set
 
 
+def test():
+    nums = [1,2,3]
+    expected = [[],[3],[2],[2,3],[1],[1,3],[1,2],[1,2,3]]
+    result = generate_power_set_recursively(nums)
+    assert result == expected
+    print(result)
 
+if __name__ == "__main__":
+    test()
