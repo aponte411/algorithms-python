@@ -11,17 +11,25 @@ def palindrome_decomposition(text: str) -> List[List[str]]:
             result.append(partial_partition.copy())
             return
         # Go one ahead
-        for i in range(index+1, len(text)+1):
+        for i in range(index, len(text)):
             # get current prefix up until i and check if palindrome by
             # reversing
-            prefix = text[index:i]
+            prefix = text[index:i+1]
             if prefix == prefix[::-1]:
                 # create shallow copy of prefix by setting it as list
                 helper(
-                    index=i,
-                    partial_partition=[prefix],
+                    index=i+1,
+                    partial_partition=partial_partition+[prefix],
                 )
         # end search
     result: List[List[str]] = []
     helper(index=0, partial_partition=[])
     return result
+
+def test():
+    text = "aab"
+    result = palindrome_decomposition(text)
+    print(result)
+
+if __name__ == "__main__":
+    test()
