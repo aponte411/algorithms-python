@@ -1,6 +1,30 @@
 import pytest
+from typing import List
 
-def longest_palindrome(s: str) -> str:
+
+def longest_palindromic_subsequence(s: str) -> int:
+    def recurse(left: int, right: int, memo: List[List[int]]) -> int:
+        if left > right:
+            return 0
+        if left == right:
+            return 1
+
+        if memo[left][right] != -1:
+            return memo[left][right]
+
+        if s[left]==s[right]:
+            # with both
+            return recurse(left+1, right-1, memo) + 2
+        else:
+            with_left = recurse(left+1, right, memo)
+            with_right = recurse(left, right-1, memo)
+            memo[left][right] =  max(with_left, with_right)
+            return memo[left][right]
+
+    memo = [[-1 for _ in range(len(s)+1)] for _ in range(len(s)+1)]
+    return recurse(left=0, right=len(s)-1, memo=memo)
+
+def longest_palindrome_iterative(s: str) -> str:
     """
     Time: O(n^2) worst case, O(n) best case
     Space: O(1)
@@ -30,8 +54,16 @@ def longest_palindrome(s: str) -> str:
     "input, expected",
     [("babad", "bab"), ("cbbd", "bb"), ("a", "a")]
 )
-def test(input, expected):
-    result = longest_palindrome(s=input)
+def test1(input, expected):
+    result = longest_palindrome_iterative(s=input)
+    assert result == expected
+
+@pytest.mark.parametrize(
+    "input, expected",
+    [("bbbab", 4), ("cbbd", 2),]
+)
+def test2(input, expected):
+    result = longest_palindromic_subsequence(s=input)
     assert result == expected
 
 pytest.main()
