@@ -1,0 +1,41 @@
+import pytest
+from typing import List
+
+
+def least_interval(tasks: List[str], cool_down_period: int) -> int:
+    """
+    Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task.
+    Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete
+    either one task or just be idle. However, there is a non-negative integer n that represents the cooldown period between two same
+    tasks (the same letter in the array), that is that there must be at least n units of time between any two same tasks.
+    Return the least number of units of times that the CPU will take to finish all the given tasks.
+    """
+    # The max number of tasks is 26. So we can get the counts of each task using an array
+    counts = [0 for _ in range(26)]
+    for task in tasks:
+        counts[ord(task) - ord('A')] += 1
+    # Get the most frequent task
+    most_frequent = counts.pop()
+    # Calculate idle time using most_frequent task
+    idle_time = (most_frequent - 1)*cool_down_period
+    # Iteratively update walk through the tasks by removing the task from the
+    # counts array (processing that task)
+    while counts and idle_time > 0:
+        # update idle time
+        idle_time -= min(most_frequent - 1, counts.pop())
+    idle_time = max(0, idle_time)
+    return idle_time + len(tasks)
+
+
+@pytest.mark.parametrize(
+    "input, expected",
+    [
+        ([["A","A","A","B","B","B"], 2], 8),
+        ([["A","A","A","A","A","A","B","C","D","E","F","G"], 2], 16)
+    ]
+)
+def test(input, expected):
+    result = least_interval(input[0], input[1])
+    assert result == expected
+
+pytest.main()
