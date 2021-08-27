@@ -2,7 +2,7 @@ from typing import List
 
 
 def search_insert(nums: List[int], target: int) -> List[int]:
-    """O(n log n) time O(1)"""
+    """O(log n) time O(1)"""
     left, right = 0, len(nums) - 1
     while left <= right:
         pivot = left + ((right - left)//2)
